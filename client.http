@@ -1,9 +1,43 @@
 #Variables
 @baseUrl = http://localhost:3333
 
-
 ###
+# @name getRooms
 GET {{baseUrl}}/rooms
 
 ### Health check
+# @name HealthCheck
 GET {{baseUrl}}/health
+
+### 
+# Create Room
+
+# @name createRoom
+
+POST {{baseUrl}}/rooms
+Accept: application/json
+Content-Type: application/json
+
+{
+    "name":"Room test",
+    "description":"This is any description for testing."
+}
+
+###
+# Room ID
+@roomId = {{createRoom.response.body.$.roomId}}
+
+###
+#Get room questions
+# @name GetRoomQuestions
+GET {{baseUrl}}/rooms/{{roomId}}/questions
+
+###
+# Create Room Question
+# @name createRoomQuestion
+POST {{baseUrl}}/rooms/{{roomId}}/questions
+Content-Type: application/json
+
+{
+    "question":"Conceito de X dentro do Y?"
+}
